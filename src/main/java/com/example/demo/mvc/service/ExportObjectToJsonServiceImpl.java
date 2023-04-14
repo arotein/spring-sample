@@ -1,7 +1,7 @@
-package com.example.demo.jsonToTxt.service;
+package com.example.demo.mvc.service;
 
-import com.example.demo.jsonToTxt.JsonObject;
-import com.example.demo.jsonToTxt.ValidDto;
+import com.example.demo.mvc.JsonObject;
+import com.example.demo.mvc.ValidDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

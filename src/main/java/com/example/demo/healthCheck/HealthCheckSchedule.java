@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class HealthCheckSchedule {
-    @Scheduled(cron = "0/5 * * * * *")
+    @Scheduled(cron = "0/30 * * * * *")
     public void healthScheduled() {
         log.info("@@ HealthCheck @@");
     }

@@ -1,4 +1,4 @@
-package com.example.demo.jsonToTxt;
+package com.example.demo.mvc;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

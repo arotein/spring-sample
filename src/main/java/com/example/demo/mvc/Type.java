@@ -1,4 +1,4 @@
-package com.example.demo.jsonToTxt;
+package com.example.demo.mvc;
 
 public enum Type {
     A_TYPE,

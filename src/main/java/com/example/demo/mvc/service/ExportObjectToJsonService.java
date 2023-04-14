@@ -1,6 +1,6 @@
-package com.example.demo.jsonToTxt.service;
+package com.example.demo.mvc.service;
 
-import com.example.demo.jsonToTxt.ValidDto;
+import com.example.demo.mvc.ValidDto;
 
 public interface ExportObjectToJsonService {
     boolean fileGenerate(ValidDto dto);

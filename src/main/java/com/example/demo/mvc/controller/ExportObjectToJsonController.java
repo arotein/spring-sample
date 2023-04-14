@@ -1,7 +1,7 @@
-package com.example.demo.jsonToTxt.controller;
+package com.example.demo.mvc.controller;
 
-import com.example.demo.jsonToTxt.service.ExportObjectToJsonService;
-import com.example.demo.jsonToTxt.ValidDto;
+import com.example.demo.mvc.service.ExportObjectToJsonService;
+import com.example.demo.mvc.ValidDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

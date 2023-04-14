@@ -1,7 +1,7 @@
-package com.example.demo.jsonToTxt.serviceTest;
+package com.example.demo.mvc.serviceTest;
 
-import com.example.demo.jsonToTxt.ValidDto;
-import com.example.demo.jsonToTxt.service.ExportObjectToJsonServiceImpl;
+import com.example.demo.mvc.ValidDto;
+import com.example.demo.mvc.service.ExportObjectToJsonServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

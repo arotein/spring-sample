@@ -1,6 +1,6 @@
-package com.example.demo.jsonToTxt.controllerTest;
+package com.example.demo.mvc.controllerTest;
 
-import com.example.demo.jsonToTxt.controller.ExportObjectToJsonController;
+import com.example.demo.mvc.controller.ExportObjectToJsonController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

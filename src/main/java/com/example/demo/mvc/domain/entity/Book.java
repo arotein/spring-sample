@@ -17,8 +17,11 @@ public class Book {
     private Long id;
     @Column(nullable = false, updatable = false, unique = true)
     private Long uniqueNumber;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private Integer page;
     @Builder.Default
+    @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 }

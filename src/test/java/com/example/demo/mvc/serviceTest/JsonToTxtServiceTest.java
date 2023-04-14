@@ -42,7 +42,7 @@ public class JsonToTxtServiceTest {
     }
 
     @Test
-    @DisplayName("[성공]")
+    @DisplayName("[성공] json export")
     public void testObjectToJson() throws IOException {
         // Given
         ValidDto dto = ValidDto.builder()
@@ -51,7 +51,7 @@ public class JsonToTxtServiceTest {
 
         Path filePath = tempDir.resolve(dto.getFileName() + ".json");
 
-        // Then
+        // When
         boolean result = service.fileGenerate(dto);
 
         // Then

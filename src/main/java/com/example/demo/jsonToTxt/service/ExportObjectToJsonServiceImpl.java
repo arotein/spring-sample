@@ -18,6 +18,7 @@ import java.util.List;
 @Service
 public class ExportObjectToJsonServiceImpl implements ExportObjectToJsonService {
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private String FILE_BASE_PATH = "C:/Users/9cksq/OneDrive/바탕 화면";
 
     @SneakyThrows
     @Override
@@ -26,7 +27,7 @@ public class ExportObjectToJsonServiceImpl implements ExportObjectToJsonService 
         List<JsonObject> li = generateObjects();
 
         // 내보낼 파일경로+파일명
-        Path filePath = Paths.get("C:/Users/9cksq/OneDrive/바탕 화면", dto.getFileName() + ".json");
+        Path filePath = Paths.get(FILE_BASE_PATH, dto.getFileName() + ".json");
 
         // 객체를 string으로 변환
         String jsonStr = objectMapper.writeValueAsString(li);

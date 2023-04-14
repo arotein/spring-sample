@@ -23,7 +23,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("JsonToTxt Controller 테스트")
+@DisplayName("JsonToTxtController 테스트")
 @ExtendWith(MockitoExtension.class)
 public class JsonToTxtControllerTest {
     @Mock

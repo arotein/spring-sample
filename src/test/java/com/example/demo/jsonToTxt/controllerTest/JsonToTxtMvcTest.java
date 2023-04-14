@@ -1,8 +1,23 @@
 package com.example.demo.jsonToTxt.controllerTest;
 
-//@DisplayName("JsonToTxt Mvc 테스트")
-//@WebMvcTest(ExportObjectToJsonController.class)
+import com.example.demo.jsonToTxt.controller.ExportObjectToJsonController;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+@DisplayName("JsonToTxt Mvc 테스트")
+@WebMvcTest(ExportObjectToJsonController.class)
 public class JsonToTxtMvcTest {
+    @MockBean
+    private ExportObjectToJsonController controller;
+
+    @Test
+    @DisplayName("서버기동 확인")
+    void testServer() {
+
+    }
+
 //    @Autowired
 //    private MockMvc mockMvc;
 //    @MockBean

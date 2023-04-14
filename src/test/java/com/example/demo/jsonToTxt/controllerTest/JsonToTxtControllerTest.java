@@ -32,7 +32,7 @@ public class JsonToTxtControllerTest {
     @InjectMocks
     private ExportObjectToJsonController controller;
     private MockMvc mockMvc;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
     public void init() {
@@ -40,8 +40,29 @@ public class JsonToTxtControllerTest {
     }
 
     @Test
-    @DisplayName("컨트롤러 실패 테스트")
-    void exportFail() throws Exception {
+    @DisplayName("[성공]")
+    void exportSuccess() throws Exception {
+        // Given
+        ValidDto dto = ValidDto.builder()
+                .fileName("hello")
+                .build();
+
+        doReturn(Boolean.TRUE).when(service).fileGenerate(dto);
+
+        // Then
+        MvcResult result = mockMvc.perform(post("/api/objectToJson")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString();
+        assertThat(response).isEqualTo("true");
+    }
+
+    @Test
+    @DisplayName("[실패] 파라미터 조건")
+    void exportFail1() throws Exception {
         // Given
         ValidDto dto = ValidDto.builder()
                 .fileName(" ")
@@ -56,14 +77,14 @@ public class JsonToTxtControllerTest {
     }
 
     @Test
-    @DisplayName("컨트롤러 성공 테스트")
-    void exportSuccess() throws Exception {
+    @DisplayName("[실패] false응답")
+    void exportFail2() throws Exception {
         // Given
         ValidDto dto = ValidDto.builder()
                 .fileName("hello")
                 .build();
 
-        doReturn(true).when(service).fileGenerate(dto);
+        doReturn(Boolean.FALSE).when(service).fileGenerate(dto);
 
         // Then
         MvcResult result = mockMvc.perform(post("/api/objectToJson")
@@ -73,6 +94,6 @@ public class JsonToTxtControllerTest {
                 .andReturn();
 
         String response = result.getResponse().getContentAsString();
-        assertThat(response).isEqualTo("true");
+        assertThat(response).isEqualTo("false");
     }
 }

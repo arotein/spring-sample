@@ -1,6 +1,11 @@
 server:
   port: 12345
 
+logging:
+  charset:
+    console: UTF-8
+    file: UTF-8
+
 spring:
   profiles:
     active: local
@@ -11,15 +16,51 @@ spring:
         format_sql: true
         show_sql: true
         query.in_clause_parameter_padding: true
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: testcontainers
+  datasource:
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:mysql:latest://test?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: root
+    password: mysql
+  jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: local
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: root
     password: mysql
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
 
-logging:
-  charset:
-    console: UTF-8
-    file: UTF-8
+---
+
+spring:
+  config:
+    activate:
+      on-profile: h2
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test;
+    username: sa
+    password:
+  jpa:
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true

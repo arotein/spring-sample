@@ -14,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
@@ -21,10 +22,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("JsonToTxtController 테스트")
 @ExtendWith(MockitoExtension.class)
+@DisplayName("JsonToTxtController 테스트")
 public class JsonToTxtControllerTest {
     @Mock
     private ExportObjectToJsonServiceImpl service;
@@ -63,17 +65,21 @@ public class JsonToTxtControllerTest {
     @Test
     @DisplayName("[실패] 파라미터 조건")
     void exportFail1() throws Exception {
-        // Given
+        // given
         ValidDto dto = ValidDto.builder()
                 .fileName(" ")
                 .build();
 
-        // Then
-        mockMvc.perform(post("/api/objectToJson")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(dto)))
+        // when
+        ResultActions actions = mockMvc.perform(post("/api/objectToJson")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(dto)));
+
+        // then
+        actions
                 .andExpect(status().is4xxClientError())
-                .andExpect(result -> assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException));
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof MethodArgumentNotValidException))
+                .andDo(print());
     }
 
     @Test

@@ -8,7 +8,9 @@ import java.util.List;
 public interface BookService {
     BookResDto findBook(Long id);
 
-    List<BookResDto> findAllBooks();
+    List<BookResDto> findAllBooks(Long publishingHouseId);
 
-    boolean saveBook(BookReqDto dto);
+    Long publishBook(Long publishingHouseId, BookReqDto dto);
+
+    Long updateBookPage(Long id, Integer page);
 }

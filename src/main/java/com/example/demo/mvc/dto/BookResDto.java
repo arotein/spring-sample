@@ -1,10 +1,7 @@
 package com.example.demo.mvc.dto;
 
 import com.example.demo.mvc.domain.entity.Book;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class BookResDto {
     private Long id;
-    private Long uniqueNumber;
+    private String isbn;
     private String name;
     private Integer page;
     private LocalDateTime createdAt;
@@ -22,7 +19,7 @@ public class BookResDto {
     public static BookResDto of(Book book) {
         return BookResDto.builder()
                 .id(book.getId())
-                .uniqueNumber(book.getUniqueNumber())
+                .isbn(book.getIsbn())
                 .name(book.getName())
                 .page(book.getPage())
                 .createdAt(book.getCreatedAt())

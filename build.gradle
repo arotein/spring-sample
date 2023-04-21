@@ -27,8 +27,15 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j'
     compileOnly 'org.projectlombok:lombok'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation "com.querydsl:querydsl-jpa:5.0.0"
-    annotationProcessor "com.querydsl:querydsl-apt:5.0.0"
+    implementation 'com.querydsl:querydsl-jpa:5.0.0'
+    annotationProcessor 'com.querydsl:querydsl-apt:5.0.0'
+    implementation 'org.springframework.retry:spring-retry'
+    implementation 'org.springframework:spring-aspects'
+    testImplementation 'org.testcontainers:junit-jupiter:1.18.0'
+    testImplementation 'org.testcontainers:mysql:1.18.0'
+    testImplementation 'com.navercorp.fixturemonkey:fixture-monkey-starter:0.5.5'
+    testImplementation 'com.navercorp.fixturemonkey:fixture-monkey-javax-validation:0.5.5'
+    implementation 'com.h2database:h2'
 }
 
 tasks.named('test') {

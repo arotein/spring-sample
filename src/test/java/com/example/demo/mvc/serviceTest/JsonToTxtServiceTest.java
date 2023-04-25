@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("JsonToTxtService 테스트")
 @ExtendWith(MockitoExtension.class)
-public class JsonToTxtServiceTest {
+class JsonToTxtServiceTest {
     @InjectMocks
     private ExportObjectToJsonServiceImpl exportService;
     @InjectMocks

@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("JsonToTxtController 테스트")
-public class JsonToTxtControllerTest {
+class JsonToTxtControllerTest {
     @Mock
     private ExportObjectToJsonServiceImpl service;
 

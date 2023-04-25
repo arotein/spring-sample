@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @Transactional
 @Rollback(false)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class BookServiceWithDBTest extends TestContainer {
+class BookServiceTestWithContainer extends TestContainer {
     @Autowired
     private BookServiceImpl service;
     @SpyBean

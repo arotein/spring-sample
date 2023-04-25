@@ -21,6 +21,7 @@ public class FixtureMonkeyTest {
     private final FixtureMonkey monkey = FixtureMonkey.builder()
             .objectIntrospector(BuilderArbitraryIntrospector.INSTANCE)
             .plugin(new JavaxValidationPlugin())
+            .defaultNotNull(true)
             .build();
 
     @RepeatedTest(10)

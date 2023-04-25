@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@ToString
+@ToString(exclude = "books")
 @Entity
 @Getter
 @Builder
@@ -39,7 +39,8 @@ public class PublishingHouse { // 출판사
         Book book = books.stream()
                 .filter(b -> b.getId().equals(bookId))
                 .findFirst()
-                .get();
+                .orElseThrow(() -> new RuntimeException("bookId가 존재하지 않음. bookId = " + bookId));
+
         book.updatePage(page);
     }
 }

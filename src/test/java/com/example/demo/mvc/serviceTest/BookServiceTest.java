@@ -19,10 +19,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class BookServiceTest {
+class BookServiceTest {
     @InjectMocks
     private BookServiceImpl service;
     @Spy
@@ -62,9 +63,9 @@ public class BookServiceTest {
         BookResDto dto3 = service.findBook(3L);
 
         // then
-        Assertions.assertThat(dto1.getId()).isEqualTo(1L);
-        Assertions.assertThat(dto2.getId()).isEqualTo(2L);
-        Assertions.assertThat(dto3.getId()).isEqualTo(3L);
+        assertThat(dto1.getId()).isEqualTo(1L);
+        assertThat(dto2.getId()).isEqualTo(2L);
+        assertThat(dto3.getId()).isEqualTo(3L);
     }
 
     @Test
@@ -73,13 +74,25 @@ public class BookServiceTest {
         when(repository.findById(1L)).thenReturn(Optional.of(publishingHouse1));
         when(repository.findById(2L)).thenReturn(Optional.of(publishingHouse2));
 
+        BookResDto dto1 = new BookResDto(1L, null, null, null, null);
+        BookResDto dto2 = new BookResDto(2L, null, null, null, null);
+        BookResDto dto3 = new BookResDto(3L, null, null, null, null);
+
         // when
         List<BookResDto> list1 = service.findAllBooks(1L);
         List<BookResDto> list2 = service.findAllBooks(2L);
 
         // then
-        Assertions.assertThat(list1).hasSize(2);
-        Assertions.assertThat(list2).hasSize(1);
+        assertThat(list1).hasSize(2);
+        assertThat(list2).hasSize(1);
+
+        assertThat(list1)
+                .usingRecursiveFieldByFieldElementComparatorOnFields("id")
+                .contains(dto1, dto2);
+
+        assertThat(list2)
+                .usingRecursiveFieldByFieldElementComparatorOnFields("id")
+                .contains(dto3);
     }
 
     @Test
@@ -105,7 +118,10 @@ public class BookServiceTest {
         service.publishBook(1L, book);
 
         // then
-        Assertions.assertThat(publishingHouse1.getBooks()).hasSize(1);
+        assertThat(publishingHouse1.getBooks()).hasSize(1);
+        assertThat(publishingHouse1.getBooks())
+                .usingRecursiveFieldByFieldElementComparatorOnFields("isbn", "name", "page") // equals 오버라이드 하지않았으므로 필드값만 비교
+                .contains(book.toEntity());
     }
 
     @Test
@@ -122,13 +138,13 @@ public class BookServiceTest {
         service.updateBookPage(3L, 333);
 
         // then
-        Assertions.assertThat(book1.getPage()).isEqualTo(100);
-        Assertions.assertThat(book2.getPage()).isEqualTo(200);
-        Assertions.assertThat(book3.getPage()).isEqualTo(333);
+        assertThat(book1.getPage()).isEqualTo(100);
+        assertThat(book2.getPage()).isEqualTo(200);
+        assertThat(book3.getPage()).isEqualTo(333);
 
-        Assertions.assertThat(book1.getVersion()).isEqualTo(2);
-        Assertions.assertThat(book2.getVersion()).isEqualTo(2);
-        Assertions.assertThat(book3.getVersion()).isEqualTo(3);
+        assertThat(book1.getVersion()).isEqualTo(2);
+        assertThat(book2.getVersion()).isEqualTo(2);
+        assertThat(book3.getVersion()).isEqualTo(3);
     }
 
     @Test
@@ -146,7 +162,7 @@ public class BookServiceTest {
 
         // then
         longCaptor.getAllValues();
-        Assertions.assertThat(longCaptor.getAllValues()).contains(1L, 2L);
+        assertThat(longCaptor.getAllValues()).contains(1L, 2L);
     }
 
     static class Factory {

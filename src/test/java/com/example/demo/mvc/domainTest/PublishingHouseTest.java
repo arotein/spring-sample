@@ -2,13 +2,15 @@ package com.example.demo.mvc.domainTest;
 
 import com.example.demo.mvc.domain.entity.Book;
 import com.example.demo.mvc.domain.entity.PublishingHouse;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 @ExtendWith(MockitoExtension.class)
-public class PublishingHouseTest {
+class PublishingHouseTest {
     @Test
     void 책_등록() {
         // given
@@ -21,8 +23,8 @@ public class PublishingHouseTest {
         publishingHouse.publishBook(book2);
 
         // then
-        Assertions.assertThat(publishingHouse.getBooks()).contains(book2, book);
-        Assertions.assertThat(publishingHouse.getBooks()).contains(book, book2);
+        assertThat(publishingHouse.getBooks()).contains(book2, book);
+        assertThat(publishingHouse.getBooks()).contains(book, book2);
     }
 
     @Test
@@ -40,9 +42,9 @@ public class PublishingHouseTest {
         boolean result3 = publishingHouse.existById(3L);
 
         // then
-        Assertions.assertThat(result1).isTrue();
-        Assertions.assertThat(result2).isTrue();
-        Assertions.assertThat(result3).isFalse();
+        assertThat(result1).isTrue();
+        assertThat(result2).isTrue();
+        assertThat(result3).isFalse();
     }
 
     @Test
@@ -56,6 +58,9 @@ public class PublishingHouseTest {
         publishingHouse.updateBookPage(1L, 100);
 
         // then
-        Assertions.assertThat(book.getPage()).isEqualTo(100);
+        assertThat(book.getPage()).isEqualTo(100);
+
+        assertThatThrownBy(() -> publishingHouse.updateBookPage(2L, 301))
+                .isInstanceOf(RuntimeException.class);
     }
 }

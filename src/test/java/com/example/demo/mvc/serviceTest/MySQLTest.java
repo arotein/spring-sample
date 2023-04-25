@@ -18,9 +18,10 @@ import org.springframework.test.context.ActiveProfiles;
 @Rollback(false)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class MySQLTest {
+class MySQLTest {
     @Autowired
     private PublishingHouseRepository repository;
+    final String address = "주소";
 
     @Order(1)
     @Test
@@ -28,14 +29,15 @@ public class MySQLTest {
         // given
         PublishingHouse publishingHouse = PublishingHouse.builder()
                 .name("A출판사")
-                .address("주소")
+                .address(address)
                 .build();
 
         // when
         PublishingHouse savedPublishingHouse = repository.save(publishingHouse);
 
         // then
-        Assertions.assertThat(savedPublishingHouse.getAddress()).isEqualTo("주소");
+        Assertions.assertThat(savedPublishingHouse.getAddress())
+                .isEqualTo(address);
     }
 
     @Order(2)

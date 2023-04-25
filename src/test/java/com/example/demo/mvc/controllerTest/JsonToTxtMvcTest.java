@@ -5,7 +5,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @WebMvcTest(ExportObjectToJsonController.class)
-public class JsonToTxtMvcTest {
+class JsonToTxtMvcTest {
     @MockBean
     private ExportObjectToJsonController controller;
 

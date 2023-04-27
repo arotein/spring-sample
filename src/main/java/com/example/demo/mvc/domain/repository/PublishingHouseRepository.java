@@ -7,4 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface PublishingHouseRepository extends JpaRepository<PublishingHouse, Long> {
     @EntityGraph(attributePaths = "books")
     PublishingHouse findByBooks_Id(Long id);
+
+    @EntityGraph(attributePaths = "books")
+    PublishingHouse findByBooks_Isbn(String isbn);
 }

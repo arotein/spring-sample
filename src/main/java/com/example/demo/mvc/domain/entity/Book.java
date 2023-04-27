@@ -26,7 +26,7 @@ public class Book {
     @Column(nullable = false)
     private Integer version = 1;
     @CreatedDate
-    @Column(nullable = false, updatable = false)
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false) // optional false : inner join

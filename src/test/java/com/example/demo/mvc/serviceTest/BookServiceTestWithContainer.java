@@ -54,7 +54,7 @@ class BookServiceTestWithContainer extends TestContainer {
     @Order(2)
     @Test
     void 컨테이너_생성_테스트() {
-        BookResDto bookDto = service.findBook(1L);
+        BookResDto bookDto = service.findBookById(1L);
 
         System.out.println(bookDto);
 

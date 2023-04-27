@@ -6,7 +6,9 @@ import com.example.demo.mvc.dto.BookResDto;
 import java.util.List;
 
 public interface BookService {
-    BookResDto findBook(Long id);
+    BookResDto findBookById(Long id);
+
+    BookResDto findBookByIsbn(String isbn);
 
     List<BookResDto> findAllBooks(Long publishingHouseId);
 

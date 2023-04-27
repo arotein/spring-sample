@@ -12,7 +12,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -50,16 +53,38 @@ class BookServiceMockTest {
     }
 
     @Test
-    void findBook() {
+    void findBookById() {
         // given
         when(repository.findByBooks_Id(1L)).thenReturn(publishingHouse1);
         when(repository.findByBooks_Id(2L)).thenReturn(publishingHouse1);
         when(repository.findByBooks_Id(3L)).thenReturn(publishingHouse2);
 
         // when
-        BookResDto dto1 = service.findBook(1L);
-        BookResDto dto2 = service.findBook(2L);
-        BookResDto dto3 = service.findBook(3L);
+        BookResDto dto1 = service.findBookById(1L);
+        BookResDto dto2 = service.findBookById(2L);
+        BookResDto dto3 = service.findBookById(3L);
+
+        // then
+        assertThat(dto1.getId()).isEqualTo(1L);
+        assertThat(dto2.getId()).isEqualTo(2L);
+        assertThat(dto3.getId()).isEqualTo(3L);
+    }
+
+    @Test
+    void findBookByIsbn() {
+        // given
+        String isbn1 = book1.getIsbn();
+        String isbn2 = book2.getIsbn();
+        String isbn3 = book3.getIsbn();
+
+        when(repository.findByBooks_Isbn(isbn1)).thenReturn(publishingHouse1);
+        when(repository.findByBooks_Isbn(isbn2)).thenReturn(publishingHouse1);
+        when(repository.findByBooks_Isbn(isbn3)).thenReturn(publishingHouse2);
+
+        // when
+        BookResDto dto1 = service.findBookByIsbn(isbn1);
+        BookResDto dto2 = service.findBookByIsbn(isbn2);
+        BookResDto dto3 = service.findBookByIsbn(isbn3);
 
         // then
         assertThat(dto1.getId()).isEqualTo(1L);
@@ -124,22 +149,23 @@ class BookServiceMockTest {
     @Test
     void publishBook() {
         // given
-        BookReqDto book = BookReqDto.builder()
+        BookReqDto bookDto = BookReqDto.builder()
                 .isbn("isbn")
                 .name("TDD")
                 .page(100)
                 .build();
-        PublishingHouse publishingHouse1 = Factory.publishingHouse(1L);
-        when(repository.findById(1L)).thenReturn(Optional.of(publishingHouse1));
+        PublishingHouse publishingHouse = Factory.publishingHouse(1L);
+        when(repository.findById(1L)).thenReturn(Optional.of(publishingHouse));
 
         // when
-        service.publishBook(1L, book);
+        service.publishBook(1L, bookDto);
 
         // then
-        assertThat(publishingHouse1.getBooks()).hasSize(1);
-        assertThat(publishingHouse1.getBooks())
+        assertThat(publishingHouse.getBooks())
+                .hasSize(1);
+        assertThat(publishingHouse.getBooks())
                 .usingRecursiveFieldByFieldElementComparatorOnFields("isbn", "name", "page") // equals 오버라이드 하지않았으므로 필드값만 비교
-                .contains(book.toEntity());
+                .contains(bookDto.toEntity());
     }
 
     @Test
@@ -189,7 +215,10 @@ class BookServiceMockTest {
         }
 
         public static Book book(Long id) {
-            return Book.builder().id(id).build();
+            return Book.builder()
+                    .id(id)
+                    .isbn("isbn" + id)
+                    .build();
         }
     }
 }

@@ -21,8 +21,14 @@ public class BookServiceImpl implements BookService {
 
     @Transactional(readOnly = true)
     @Override
-    public BookResDto findBook(Long bookId) {
-        return BookResDto.of(findBookById(bookId));
+    public BookResDto findBookById(Long bookId) {
+        return BookResDto.of(findByBookId(bookId));
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public BookResDto findBookByIsbn(String isbn) {
+        return BookResDto.of(findByIsbn(isbn));
     }
 
     @AutoAssignIndex
@@ -39,25 +45,33 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Long publishBook(Long publishingHouseId, BookReqDto dto) {
-        Book book = dto.toEntity();
         publishingHouseRepository.findById(publishingHouseId)
                 .orElseThrow(() -> new RuntimeException("출판사가 없습니다."))
-                .publishBook(book);
-        return book.getId();
+                .publishBook(dto.toEntity());
+        return publishingHouseId;
     }
 
     @Override
     public Long updateBookPage(Long bookId, Integer page) {
-        Book book = findBookById(bookId);
+        Book book = findByBookId(bookId);
         book.getPublishingHouse().updateBookPage(bookId, page);
         return book.getId();
     }
 
-    private Book findBookById(Long bookId) {
+    private Book findByBookId(Long bookId) {
         return publishingHouseRepository.findByBooks_Id(bookId)
                 .getBooks()
                 .stream()
                 .filter(b -> b.getId().equals(bookId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("책이 없습니다."));
+    }
+
+    private Book findByIsbn(String isbn) {
+        return publishingHouseRepository.findByBooks_Isbn(isbn)
+                .getBooks()
+                .stream()
+                .filter(b -> b.getIsbn().equals(isbn))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("책이 없습니다."));
     }

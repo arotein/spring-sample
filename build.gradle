@@ -36,6 +36,8 @@ dependencies {
     testImplementation 'com.navercorp.fixturemonkey:fixture-monkey-starter:0.5.5'
     testImplementation 'com.navercorp.fixturemonkey:fixture-monkey-javax-validation:0.5.5'
     implementation 'com.h2database:h2'
+    implementation 'org.graalvm.js:js:21.3.0'
+    implementation 'org.graalvm.js:js-scriptengine:21.3.0'
 }
 
 tasks.named('test') {

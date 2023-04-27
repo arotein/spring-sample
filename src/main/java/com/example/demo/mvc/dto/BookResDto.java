@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookResDto {
+    private Integer index;
     private Long id;
     private String isbn;
     private String name;

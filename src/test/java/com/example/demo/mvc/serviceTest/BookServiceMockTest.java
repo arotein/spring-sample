@@ -1,5 +1,6 @@
 package com.example.demo.mvc.serviceTest;
 
+import com.example.demo.aop.AutoAssignIndexAspect;
 import com.example.demo.mvc.domain.entity.Book;
 import com.example.demo.mvc.domain.entity.PublishingHouse;
 import com.example.demo.mvc.domain.repository.PublishingHouseRepository;
@@ -8,12 +9,10 @@ import com.example.demo.mvc.dto.BookResDto;
 import com.example.demo.mvc.service.BookServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
-import org.mockito.Spy;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -23,10 +22,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class BookServiceTest {
+class BookServiceMockTest {
     @InjectMocks
     private BookServiceImpl service;
-    @Spy
+    @Mock
     private PublishingHouseRepository repository;
     @Captor
     ArgumentCaptor<Long> longCaptor;
@@ -68,39 +67,58 @@ class BookServiceTest {
         assertThat(dto3.getId()).isEqualTo(3L);
     }
 
-    @Test
-    void findAllBooks_성공() {
-        // given
-        when(repository.findById(1L)).thenReturn(Optional.of(publishingHouse1));
-        when(repository.findById(2L)).thenReturn(Optional.of(publishingHouse2));
+    @Nested
+    class findAllBooks {
+        @Test
+        void 성공() {
+            // given
+            when(repository.findById(1L)).thenReturn(Optional.of(publishingHouse1));
+            when(repository.findById(2L)).thenReturn(Optional.of(publishingHouse2));
 
-        BookResDto dto1 = new BookResDto(1L, null, null, null, null);
-        BookResDto dto2 = new BookResDto(2L, null, null, null, null);
-        BookResDto dto3 = new BookResDto(3L, null, null, null, null);
+            BookResDto dto1 = new BookResDto(null, 1L, null, null, null, null);
+            BookResDto dto2 = new BookResDto(null, 2L, null, null, null, null);
+            BookResDto dto3 = new BookResDto(null, 3L, null, null, null, null);
 
-        // when
-        List<BookResDto> list1 = service.findAllBooks(1L);
-        List<BookResDto> list2 = service.findAllBooks(2L);
+            // when
+            List<BookResDto> list1 = service.findAllBooks(1L);
+            List<BookResDto> list2 = service.findAllBooks(2L);
 
-        // then
-        assertThat(list1).hasSize(2);
-        assertThat(list2).hasSize(1);
+            // then
+            assertThat(list1).hasSize(2);
+            assertThat(list2).hasSize(1);
 
-        assertThat(list1)
-                .usingRecursiveFieldByFieldElementComparatorOnFields("id")
-                .contains(dto1, dto2);
+            assertThat(list1)
+                    .usingRecursiveFieldByFieldElementComparatorOnFields("id")
+                    .contains(dto1, dto2);
 
-        assertThat(list2)
-                .usingRecursiveFieldByFieldElementComparatorOnFields("id")
-                .contains(dto3);
-    }
+            assertThat(list2)
+                    .usingRecursiveFieldByFieldElementComparatorOnFields("id")
+                    .contains(dto3);
+        }
 
-    @Test
-    void findAllBooks_실패() {
-        // when & then
-        Assertions.assertThatThrownBy(() -> service.findAllBooks(1L))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessage("출판사가 없습니다.");
+        @Test
+        void 실패() {
+            // when & then
+            Assertions.assertThatThrownBy(() -> service.findAllBooks(1L))
+                    .isInstanceOf(RuntimeException.class)
+                    .hasMessage("출판사가 없습니다.");
+        }
+
+        @Test
+        void AutoAssignIndex() {
+            // given
+            AutoAssignIndexAspect aop = new AutoAssignIndexAspect();
+            when(repository.findById(1L)).thenReturn(Optional.of(publishingHouse1));
+
+            // when
+            List<BookResDto> list = service.findAllBooks(1L);
+            aop.autoAssign(list);
+
+            // then
+            assertThat(list)
+                    .extracting("index")
+                    .containsExactly(0, 1);
+        }
     }
 
     @Test

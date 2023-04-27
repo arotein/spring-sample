@@ -1,5 +1,6 @@
 package com.example.demo.mvc.service;
 
+import com.example.demo.aop.AutoAssignIndex;
 import com.example.demo.mvc.domain.entity.Book;
 import com.example.demo.mvc.domain.repository.PublishingHouseRepository;
 import com.example.demo.mvc.dto.BookReqDto;
@@ -24,6 +25,7 @@ public class BookServiceImpl implements BookService {
         return BookResDto.of(findBookById(bookId));
     }
 
+    @AutoAssignIndex
     @Transactional(readOnly = true)
     @Override
     public List<BookResDto> findAllBooks(Long publishingHouseId) {

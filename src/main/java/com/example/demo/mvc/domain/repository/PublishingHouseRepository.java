@@ -10,4 +10,7 @@ public interface PublishingHouseRepository extends JpaRepository<PublishingHouse
 
     @EntityGraph(attributePaths = "books")
     PublishingHouse findByBooks_Isbn(String isbn);
+
+    @EntityGraph(attributePaths = "books")
+    PublishingHouse findByNameAndAddress(String name, String address);
 }

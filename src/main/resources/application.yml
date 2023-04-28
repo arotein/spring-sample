@@ -1,9 +1,16 @@
 server:
   port: 12345
 
+logging:
+  charset:
+    console: UTF-8
+    file: UTF-8
+
 spring:
   profiles:
-    active: local
+    active: h2
+  batch:
+    job.enabled: false # false: 앱 구동시 job 실행 안 함
   jpa:
     hibernate.ddl-auto: update
     properties:
@@ -11,6 +18,14 @@ spring:
         format_sql: true
         show_sql: true
         query.in_clause_parameter_padding: true
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: mysql
+  jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
   datasource:
@@ -19,7 +34,18 @@ spring:
     username: root
     password: mysql
 
-logging:
-  charset:
-    console: UTF-8
-    file: UTF-8
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: h2
+  jpa:
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test;
+    username: sa
+    password:

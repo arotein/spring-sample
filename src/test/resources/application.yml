@@ -9,6 +9,8 @@ logging:
 spring:
   profiles:
     active: local
+  batch:
+    job.enabled: false # false: 앱 구동시 job 실행 안 함
   jpa:
     hibernate.ddl-auto: update
     properties:

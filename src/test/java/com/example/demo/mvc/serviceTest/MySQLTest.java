@@ -13,6 +13,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.List;
+
 @DataJpaTest
 @ActiveProfiles("local")
 @Rollback(false)
@@ -43,5 +45,7 @@ class MySQLTest {
     @Order(2)
     @Test
     void 출판사_조회() {
+        List<PublishingHouse> all = repository.findAll();
+        System.out.println("all = " + all);
     }
 }

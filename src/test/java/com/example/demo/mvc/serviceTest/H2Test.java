@@ -7,16 +7,19 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
 @ActiveProfiles("h2")
+@SpringBootTest
+@Transactional
 @Rollback(false)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class H2Test {
@@ -31,7 +34,10 @@ class H2Test {
                 .name("A출판사")
                 .address(address)
                 .build();
-        PublishingHouse savedPublishingHouse = repository.save(publishingHouse);
+        PublishingHouse savedPublishingHouse = repository.save(publishingHouse); // 왜 저장이 안될까?
+
+        List<PublishingHouse> all = repository.findAll();
+        System.out.println("all size = " + all.size());
 
         assertThat(savedPublishingHouse.getAddress())
                 .isEqualTo(address);
@@ -40,6 +46,9 @@ class H2Test {
     @Order(2)
     @Test
     void 출판사_조회() {
+        List<PublishingHouse> all = repository.findAll();
+        System.out.println("all = " + all);
+
         Optional<PublishingHouse> opPublishingHouse = repository.findById(1L);
 
         assertThat(opPublishingHouse)

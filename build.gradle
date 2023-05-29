@@ -31,15 +31,22 @@ dependencies {
     annotationProcessor 'com.querydsl:querydsl-apt:5.0.0'
     implementation 'org.springframework.retry:spring-retry'
     implementation 'org.springframework:spring-aspects'
+    // testcontainer
     testImplementation 'org.testcontainers:junit-jupiter:1.18.0'
     testImplementation 'org.testcontainers:mysql:1.18.0'
+    // spring batch
     implementation 'org.springframework.boot:spring-boot-starter-batch'
     testImplementation 'org.springframework.batch:spring-batch-test'
+    // fixture monkey
     testImplementation 'com.navercorp.fixturemonkey:fixture-monkey-starter:0.5.5'
     testImplementation 'com.navercorp.fixturemonkey:fixture-monkey-javax-validation:0.5.5'
+    // In-Memory DB(H2)
     implementation 'com.h2database:h2'
+    // JS eval
     implementation 'org.graalvm.js:js:21.3.0'
     implementation 'org.graalvm.js:js-scriptengine:21.3.0'
+    // S3
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }
 
 tasks.named('test') {

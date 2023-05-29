@@ -1,8 +1,8 @@
 package com.example.demo.fixtureMonkey;
 
-import com.example.demo.mvc.domain.repository.PublishingHouseRepository;
-import com.example.demo.mvc.dto.BookReqDto;
-import com.example.demo.mvc.service.BookServiceImpl;
+import com.example.demo.book.domain.repository.PublishingHouseRepository;
+import com.example.demo.book.dto.BookReqDto;
+import com.example.demo.book.service.BookServiceImpl;
 import com.navercorp.fixturemonkey.FixtureMonkey;
 import com.navercorp.fixturemonkey.api.introspector.BuilderArbitraryIntrospector;
 import com.navercorp.fixturemonkey.javax.validation.plugin.JavaxValidationPlugin;

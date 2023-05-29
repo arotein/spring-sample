@@ -1,8 +1,8 @@
 package com.example.demo.batch;
 
-import com.example.demo.mvc.domain.entity.Book;
-import com.example.demo.mvc.domain.entity.PublishingHouse;
-import com.example.demo.mvc.domain.repository.PublishingHouseRepository;
+import com.example.demo.book.domain.entity.Book;
+import com.example.demo.book.domain.entity.PublishingHouse;
+import com.example.demo.book.domain.repository.PublishingHouseRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
